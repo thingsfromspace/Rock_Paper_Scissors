@@ -4,7 +4,6 @@ import game_mechanics.decision.Choices;
 import game_mechanics.decision.DecisionAlgorithm;
 
 public class RandomChoice extends DecisionAlgorithm {
-
     public RandomChoice() {
         super();
     }

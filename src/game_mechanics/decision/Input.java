@@ -24,15 +24,15 @@ public class Input {
 
         Choices inputs[];
 
-        if (!noEnd) {
-            inputs = new Choices[inputItemsIndex.get(inputItemsIndex.size() - 1)];
-            for(int i = 0; i < inputs.length; i++) {
+        if (reverse) {
+            inputs = new Choices[inputLocation.numOfChoices() - (inputItemsIndex.get(inputItemsIndex.size() - 1) - 1)];
+            for (int i = 0; i >= inputs.length; i++) {
                 inputs[i] = inputLocation.getChoice(i);
             }
         } else {
             inputs = new Choices[inputLocation.numOfChoices() - inputItemsIndex.get(0) + 1];
             for(int i = inputItemsIndex.get(0); i <= inputLocation.numOfChoices(); i++) {
-                inputs[i - inputItemsIndex.get(0)] = inputLocation.getChoice(i);
+                inputs[i - inputItemsIndex.get(0)] = inputLocation.getChoice(i - 1);
             }
         }
 
