@@ -5,14 +5,24 @@ import game_mechanics.decision.Algorithms.RandomChoice;
 import game_mechanics.decision.Algorithms.TrickyChoice;
 import game_mechanics.decision.Choices;
 
-public class TrickyChoiceAgentTest {
+/**
+ * <h1>Test the Tricky Choice Agent</h1>
+ *
+ * @author Tanner Leonard
+ * @version 1.0
+ * @since 2018-09-29
+ */
+class TrickyChoiceAgentTest {
+    /**
+     * Performs the tests on the Tricky Choice Agent
+     * and prints out the results.
+     * @param args command line arguments
+     */
     public static void main(String args[]) {
         Agent random1 = new Agent(new RandomChoice());
-        TrickyChoice algo1 = new TrickyChoice((random1));
-        Agent test1 = new Agent(algo1);
-        algo1.setSelf(test1);
-
-        Choices playerChoices[][] = new Choices[2][10];
+        TrickyChoice algorithm1 = new TrickyChoice((random1));
+        Agent test1 = new Agent(algorithm1);
+        algorithm1.setSelf(test1);
 
 
         // TEST 1: Make sure that it behaves correctly when losing

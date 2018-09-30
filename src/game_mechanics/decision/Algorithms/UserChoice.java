@@ -5,19 +5,41 @@ import game_mechanics.decision.DecisionAlgorithm;
 
 import java.util.Scanner;
 
+/**
+ * <h1>Allows the user to select a choice</h1>
+ * This "decision algorithm" allows the user
+ * to select a choice
+ *
+ * @author Tanner Leonard
+ * @version 1.0
+ * @since 2018-09-29
+ */
 public class UserChoice extends DecisionAlgorithm {
-    private boolean commandLine = false;
+    // controls whether the input will be through the command line
+    private final boolean commandLine;
 
+    /**
+     * Creates the UserChoice decision algorithm
+     *
+     * @param commandLine whether the input will be through the command line
+     */
     public UserChoice(boolean commandLine) {
         super();
         this.commandLine = commandLine;
     }
 
+
+    /**
+     * Obtains input from the user and makes
+     * that choice
+     * @return the user's choice
+     */
     @Override
     public Choices run() {
         if (commandLine) {
+            // the command line should only be used for testing
             while (true) {
-                // this should only be used for testing
+                // obtain input form the user
                 String choices[] = {"rock", "paper", "scissors"};
                 Scanner choice = new Scanner(System.in);
                 System.out.println("Enter a choice by typing \"ROCK\", \"PAPER\", or \"SCISSORS\".");
@@ -25,8 +47,8 @@ public class UserChoice extends DecisionAlgorithm {
                 int n = java.util.Arrays.asList(choices).indexOf(userChoice);
                 if (n == -1) {
                     System.out.println("Please type a valid input.");
-                    continue;
                 } else {
+                    // return the user's input
                     if (n == 0) return Choices.ROCK;
                     if (n == 1) return Choices.PAPER;
                     return Choices.SCISSORS;

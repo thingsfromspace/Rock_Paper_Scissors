@@ -4,7 +4,19 @@ import game_mechanics.Agent;
 import game_mechanics.decision.Algorithms.RandomChoice;
 import game_mechanics.decision.Choices;
 
-public class RandomAgentTest {
+/**
+ * <h1>Tests the Random Choice Agent</h1>
+ *
+ * @author Tanner Leonard
+ * @version 1.0
+ * @since 2018-09-29
+ */
+class RandomAgentTest {
+    /**
+     * Performs the tests on the Random Choice Agent
+     * and prints out the results.
+     * @param args command line arguments
+     */
     public static void main(String args[]) {
         Agent randomAgent = new Agent(new RandomChoice());
         int scissors = 0;

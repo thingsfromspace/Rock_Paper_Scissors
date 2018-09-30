@@ -5,7 +5,19 @@ import game_mechanics.decision.Algorithms.LastChoice;
 import game_mechanics.decision.Algorithms.RandomChoice;
 import game_mechanics.decision.Choices;
 
-public class LastChoiceAgentTest {
+/**
+ * <h1>Tests the Last Choice Agent for errors</h1>
+ *
+ * @author Tanner Leonard
+ * @version 1.0
+ * @since 2018-09-29
+ */
+class LastChoiceAgentTest {
+    /**
+     * Performs the tests on the Last Choice Agent
+     * and prints out the results.
+     * @param args command line arguments
+     */
     public static void main(String args[]) {
         Agent randomAgent = new Agent(new RandomChoice());
         Agent lastChoiceAgent = new Agent(new LastChoice(randomAgent));
