@@ -1,4 +1,4 @@
-package gui.start_screen.gui_elements;
+package gui.gui_elements;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;

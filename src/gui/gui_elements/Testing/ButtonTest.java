@@ -1,6 +1,6 @@
-package gui.start_screen.gui_elements.Testing;
+package gui.gui_elements.Testing;
 
-import gui.start_screen.gui_elements.mdButton;
+import gui.gui_elements.mdButton;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
