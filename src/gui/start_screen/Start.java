@@ -31,6 +31,7 @@ public class Start {
     public Start(Font buttonFont, String... buttonText) {
         this.buttonFont = buttonFont;
         this.buttonText = buttonText;
+        this.buttons = buttonText.length;
     }
 
     @SuppressWarnings({"SameReturnValue", "unused"})

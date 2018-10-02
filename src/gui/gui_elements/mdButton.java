@@ -3,13 +3,20 @@ package gui.gui_elements;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 @SuppressWarnings("unused")
 public class mdButton extends Rectangle {
@@ -25,6 +32,20 @@ public class mdButton extends Rectangle {
     @SuppressWarnings("WeakerAccess")
     public int timesClicked = 0;
 
+    // keeps track of what elements are on the button
+    private boolean image;
+    private double startingImageWidth;
+    private double startingImageHeight;
+    private double endingImageWidth;
+    private double endingImageHeight;
+
+    private boolean text;
+    private double startingTextWidth;
+    private double startingTextHeight;
+    private double endingTextWidth;
+    private double endingTextHeight;
+    private Color textColor;
+
     private Color buttonColor = new Color(1.0, .843, 2.0 / 3, 1);
     private Color shadowColor = Color.DARKGRAY;
     private boolean getLonger;
@@ -39,25 +60,30 @@ public class mdButton extends Rectangle {
     // drop shadow
     private DropShadow dropShadow = new DropShadow();
 
+    // the items that need to be rendered
+    private Text buttonText;
+    private ImageView buttonImage;
+
     // CONSTRUCTORS
     private mdButton() {
     }
 
+    // SETTERS
+
     public mdButton(double width, double height) {
         constructRectangle(this, width, height, 0, 0,
                 buttonColor);
-        roundCorners(20, 20);
+        roundCorners(15, 15);
 
         startingWidth = width;
         startingHeight = height;
         endingWidth = startingWidth * 1.1;
         endingHeight = startingHeight * 1.1;
     }
-
     public mdButton(double width, double height, Color fill) {
         this.buttonColor = fill;
         constructRectangle(this, width, height, 0, 0, fill);
-        roundCorners(20, 20);
+        roundCorners(15, 15);
 
         startingWidth = width;
         startingHeight = height;
@@ -65,11 +91,10 @@ public class mdButton extends Rectangle {
         endingWidth = startingWidth * 1.1;
         endingHeight = startingHeight * 1.1;
     }
-
     public mdButton(double width, double height, double x, double y) {
         constructRectangle(this, width, height, x, y,
                 buttonColor);
-        roundCorners(20, 20);
+        roundCorners(15, 15);
 
         startingWidth = width;
         startingHeight = height;
@@ -77,11 +102,10 @@ public class mdButton extends Rectangle {
         endingWidth = startingWidth * 1.1;
         endingHeight = startingHeight * 1.1;
     }
-
     public mdButton(double width, double height, double x, double y, Color fill) {
         this.buttonColor = fill;
         constructRectangle(this, width, height, x, y, fill);
-        roundCorners(20, 20);
+        roundCorners(15, 15);
 
         startingWidth = width;
         startingHeight = height;
@@ -97,8 +121,6 @@ public class mdButton extends Rectangle {
     public static void setEndingRadius(int endingRadius) {
         mdButton.endingRadius = endingRadius;
     }
-
-    // SETTERS
 
     public static void setStartingXOffset(int startingXOffset) {
         mdButton.startingXOffset = startingXOffset;
@@ -116,7 +138,37 @@ public class mdButton extends Rectangle {
         mdButton.endingYOffset = endingYOffset;
     }
 
-    // BASIC METHODS
+    public void setDropShadow() {
+        this.setEffect(this.dropShadow);
+    }
+
+    public void setButtonColor(Color color) {
+        this.buttonColor = color;
+    }
+
+    // CONSTRUCTORS
+
+    public void setShadowColor(Color color) {
+        this.shadowColor = color;
+    }
+
+    public void setButtonWidth(double startingWidth) {
+        this.startingWidth = startingWidth;
+        this.endingWidth = this.startingWidth * 1.1;
+    }
+
+    public void setButtonHeight(double startingHeight) {
+        this.startingHeight = startingHeight;
+        this.endingHeight = this.startingHeight * 1.1;
+    }
+
+    public void setDsEffects(double radius, double xoffset, double yoffset, Color color) {
+        dropShadow.setRadius(radius);
+        dropShadow.setOffsetX(xoffset);
+        dropShadow.setOffsetY(yoffset);
+        dropShadow.setColor(color);
+    }
+
     private void constructRectangle(Rectangle rect, double width, double height,
                                     double x, double y, Paint fill) {
         rect.setX(x);
@@ -142,41 +194,76 @@ public class mdButton extends Rectangle {
         this.setArcWidth(arcWidth);
     }
 
-    public void setButtonColor(Color color) {
-        this.buttonColor = color;
+    public Text addText(String text, Font font, Color color) {
+        Text buttonText = new Text(text);
+        buttonText.setFont(font);
+        buttonText.setStroke(color);
+        this.textColor = color;
+        buttonText.setTextOrigin(VPos.TOP);
+
+        buttonText.setX(this.getX() + (this.getWidth() - buttonText.getBoundsInLocal().getWidth()) / 2);
+        buttonText.setY(buttonText.getBoundsInLocal().getHeight() / 9 + this.getY() + (this.getHeight() - buttonText.getBoundsInLocal().getHeight()) / 2);
+
+        this.startingTextWidth = buttonText.getBoundsInLocal().getWidth();
+        this.startingTextHeight = buttonText.getBoundsInLocal().getHeight();
+        this.endingTextWidth = startingTextWidth * 1.1;
+        this.endingTextHeight = startingTextHeight * 1.1;
+
+        this.buttonText = buttonText;
+        this.text = true;
+        return buttonText;
     }
 
-    public void setShadowColor(Color color) {
-        this.shadowColor = color;
+    public ImageView addImage(String filepath) {
+        ImageView buttonImage;
+        try {
+            Image imageSource = new Image(new FileInputStream(filepath));
+            buttonImage = new ImageView((imageSource));
+        } catch (FileNotFoundException exception) {
+            return null;
+        }
+
+        buttonImage.setX(this.getX() + (this.getWidth() - buttonImage.getBoundsInLocal().getWidth()) / 2);
+        buttonImage.setY(this.getY() + (this.getHeight() - buttonImage.getBoundsInLocal().getHeight()) / 2);
+
+        this.startingImageWidth = buttonImage.getBoundsInLocal().getWidth();
+        this.startingImageHeight = buttonImage.getBoundsInLocal().getHeight();
+        this.endingImageHeight = startingImageHeight * 1.1;
+        this.endingImageWidth = startingImageWidth * 1.1;
+
+        this.buttonImage = buttonImage;
+        this.image = true;
+        return buttonImage;
     }
 
-    public void setButtonWidth(double startingWidth) {
-        this.startingWidth = startingWidth;
-        this.endingWidth = this.startingWidth * 1.1;
+    private void resizeText(Text element) {
+        double eWidth = element.getLayoutBounds().getWidth();
+        double eHeight = element.getLayoutBounds().getHeight();
+
+        element.setScaleX(this.getWidth() / this.startingWidth);
+        element.setScaleY(this.getHeight() / this.startingHeight);
+
+        element.setX(element.getX() - (element.getLayoutBounds().getWidth() - eWidth));
+        element.setY(element.getY() - (element.getLayoutBounds().getHeight() - eHeight));
     }
 
-    public void setButtonHeight(double startingHeight) {
-        this.startingHeight = startingHeight;
-        this.endingHeight = this.startingHeight * 1.1;
+    private void resizeImage(ImageView element) {
+        double eWidth = element.getLayoutBounds().getWidth();
+        double eHeight = element.getLayoutBounds().getHeight();
+
+        element.setScaleX(this.getWidth() / this.startingWidth);
+        element.setScaleY(this.getHeight() / this.startingHeight);
+
+        element.setX(element.getX() - (element.getLayoutBounds().getWidth() - eWidth));
+        element.setY(element.getY() - (element.getLayoutBounds().getHeight() - eHeight));
     }
 
-    public void setDsEffects(double radius, double xoffset, double yoffset, Color color) {
-        dropShadow.setRadius(radius);
-        dropShadow.setOffsetX(xoffset);
-        dropShadow.setOffsetY(yoffset);
-        dropShadow.setColor(color);
-    }
-
-    private void setSize(double width, double height) {
+    private void resizeButton(double width, double height) {
         this.setX(this.getX() - (width - this.getWidth()) / 2);
         this.setY(this.getY() - (height - this.getHeight()) / 2);
 
         this.setWidth(width);
         this.setHeight(height);
-    }
-
-    public void setDropShadow() {
-        this.setEffect(this.dropShadow);
     }
 
     private boolean containsPoint(double x, double y) {
@@ -204,12 +291,15 @@ public class mdButton extends Rectangle {
 
     private void animateSize(double counter, boolean grow) {
         if (grow) {
-            this.setSize((startingWidth + (counter * (endingWidth - startingWidth) / frames)),
+            this.resizeButton((startingWidth + (counter * (endingWidth - startingWidth) / frames)),
                     (startingHeight + (counter * (endingHeight - startingHeight) / frames)));
         } else {
-            this.setSize((endingWidth - (counter * (endingWidth - startingWidth) / frames)),
+            this.resizeButton((endingWidth - (counter * (endingWidth - startingWidth) / frames)),
                     (endingHeight - (counter * (endingHeight - startingHeight) / frames)));
         }
+
+        if (text) resizeText(buttonText);
+        if (image) resizeImage(buttonImage);
     }
 
     public void animate() {
@@ -271,5 +361,7 @@ public class mdButton extends Rectangle {
             }
 
         }
+
+        if (text) buttonText.setStroke(textColor);
     }
 }
