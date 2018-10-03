@@ -1,13 +1,13 @@
 package gui.gui_elements;
 
-import javafx.event.EventHandler;
+import gui.gui_elements.options_screen.Preferences;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -15,11 +15,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 @SuppressWarnings("unused")
 public class mdButton extends Rectangle {
+
+    public boolean isButton = true;
+    private Node parent;
 
     // these should all remain the same so the shadows behave in the same way
     private static int startingRadius = 10;
@@ -31,6 +35,7 @@ public class mdButton extends Rectangle {
     // how many times has the button been clicked
     @SuppressWarnings("WeakerAccess")
     public int timesClicked = 0;
+    private String name;
 
     // keeps track of what elements are on the button
     private boolean image;
@@ -45,7 +50,13 @@ public class mdButton extends Rectangle {
     private double endingTextWidth;
     private double endingTextHeight;
     private Color textColor;
+    private String hoverStringPath = "/Users/tannerleonardmac/Documents/code_google_drive/AP_Computer_Science/Rock Paper Scissors/src/gui/gui_elements/Assets/hover.mp3";
+    public AudioClip hoverSound = new AudioClip(new File(hoverStringPath).toURI().toString());
 
+    private String clickStringPath = "/Users/tannerleonardmac/Documents/code_google_drive/AP_Computer_Science/Rock Paper Scissors/src/gui/gui_elements/Assets/click.mp3";
+    public AudioClip clickSound = new AudioClip(new File(clickStringPath).toURI().toString());
+
+    private boolean animation;
     private Color buttonColor = new Color(1.0, .843, 2.0 / 3, 1);
     private Color shadowColor = Color.DARKGRAY;
     private boolean getLonger;
@@ -70,28 +81,10 @@ public class mdButton extends Rectangle {
 
     // SETTERS
 
-    public mdButton(double width, double height) {
-        constructRectangle(this, width, height, 0, 0,
-                buttonColor);
-        roundCorners(15, 15);
+    public mdButton(String name, Node parent, double width, double height, double x, double y) {
+        this.parent = parent;
+        this.name = name;
 
-        startingWidth = width;
-        startingHeight = height;
-        endingWidth = startingWidth * 1.1;
-        endingHeight = startingHeight * 1.1;
-    }
-    public mdButton(double width, double height, Color fill) {
-        this.buttonColor = fill;
-        constructRectangle(this, width, height, 0, 0, fill);
-        roundCorners(15, 15);
-
-        startingWidth = width;
-        startingHeight = height;
-
-        endingWidth = startingWidth * 1.1;
-        endingHeight = startingHeight * 1.1;
-    }
-    public mdButton(double width, double height, double x, double y) {
         constructRectangle(this, width, height, x, y,
                 buttonColor);
         roundCorners(15, 15);
@@ -101,17 +94,14 @@ public class mdButton extends Rectangle {
 
         endingWidth = startingWidth * 1.1;
         endingHeight = startingHeight * 1.1;
+        this.setDsEffects(10, 10, 5, Color.DARKGRAY);
+
+        clickSound.volumeProperty().set(0.15);
+        hoverSound.volumeProperty().set(0.075);
     }
-    public mdButton(double width, double height, double x, double y, Color fill) {
-        this.buttonColor = fill;
-        constructRectangle(this, width, height, x, y, fill);
-        roundCorners(15, 15);
 
-        startingWidth = width;
-        startingHeight = height;
-
-        endingWidth = startingWidth * 1.1;
-        endingHeight = startingHeight * 1.1;
+    public String toString() {
+        return this.name;
     }
 
     public static void setStartingRadius(int startingRadius) {
@@ -138,12 +128,25 @@ public class mdButton extends Rectangle {
         mdButton.endingYOffset = endingYOffset;
     }
 
+    public void setAnimation(boolean animation) {
+        this.animation = animation;
+    }
+
+    public void setHoverSoundON(boolean soundOn) {
+        Preferences.preferences[1] = soundOn;
+    }
+
+    public void setClickSoundON(boolean soundOn) {
+        Preferences.preferences[0] = soundOn;
+    }
+
     public void setDropShadow() {
         this.setEffect(this.dropShadow);
     }
 
     public void setButtonColor(Color color) {
         this.buttonColor = color;
+        this.setFill(color);
     }
 
     // CONSTRUCTORS
@@ -162,7 +165,7 @@ public class mdButton extends Rectangle {
         this.endingHeight = this.startingHeight * 1.1;
     }
 
-    public void setDsEffects(double radius, double xoffset, double yoffset, Color color) {
+    private void setDsEffects(double radius, double xoffset, double yoffset, Color color) {
         dropShadow.setRadius(radius);
         dropShadow.setOffsetX(xoffset);
         dropShadow.setOffsetY(yoffset);
@@ -176,17 +179,6 @@ public class mdButton extends Rectangle {
         rect.setWidth(width);
         rect.setHeight(height);
         rect.setFill(fill);
-
-        EventHandler<MouseEvent> mouseClickHandler = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                if (rect.contains(new Point2D(e.getX(), e.getY()))) {
-                    timesClicked++;
-                }
-            }
-        };
-
-        rect.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseClickHandler);
     }
 
     private void roundCorners(@SuppressWarnings("SameParameterValue") double arcWidth, @SuppressWarnings("SameParameterValue") double arcHeight) {
@@ -194,15 +186,24 @@ public class mdButton extends Rectangle {
         this.setArcWidth(arcWidth);
     }
 
+    public void clicked() {
+        timesClicked++;
+        System.out.println("in click: " + Preferences.preferences[0] + " " + Preferences.preferences[1]);
+        if (Preferences.preferences[0] && isButton) {
+            clickSound.play();
+        }
+    }
+
     public Text addText(String text, Font font, Color color) {
         Text buttonText = new Text(text);
         buttonText.setFont(font);
+        buttonText.setFill(color);
         buttonText.setStroke(color);
         this.textColor = color;
         buttonText.setTextOrigin(VPos.TOP);
 
         buttonText.setX(this.getX() + (this.getWidth() - buttonText.getBoundsInLocal().getWidth()) / 2);
-        buttonText.setY(buttonText.getBoundsInLocal().getHeight() / 9 + this.getY() + (this.getHeight() - buttonText.getBoundsInLocal().getHeight()) / 2);
+        buttonText.setY(this.getY() + (this.getHeight() - buttonText.getBoundsInLocal().getHeight()) / 2);
 
         this.startingTextWidth = buttonText.getBoundsInLocal().getWidth();
         this.startingTextHeight = buttonText.getBoundsInLocal().getHeight();
@@ -225,6 +226,7 @@ public class mdButton extends Rectangle {
 
         buttonImage.setX(this.getX() + (this.getWidth() - buttonImage.getBoundsInLocal().getWidth()) / 2);
         buttonImage.setY(this.getY() + (this.getHeight() - buttonImage.getBoundsInLocal().getHeight()) / 2);
+        // buttonText.getBoundsInLocal().getHeight() / 9
 
         this.startingImageWidth = buttonImage.getBoundsInLocal().getWidth();
         this.startingImageHeight = buttonImage.getBoundsInLocal().getHeight();
@@ -303,6 +305,8 @@ public class mdButton extends Rectangle {
     }
 
     public void animate() {
+        if (!animation) return;
+
         Point pointerLocation = MouseInfo.getPointerInfo().getLocation();
 
         double x = pointerLocation.getX();
@@ -313,6 +317,9 @@ public class mdButton extends Rectangle {
 
         if (onButton) {
             if (isShort && !getLonger) {
+                if (Preferences.preferences[1] && isButton) {
+                    hoverSound.play();
+                }
                 // the shadow is short and needs to grow
                 getLonger = true;
                 animateDs(counter, true);
