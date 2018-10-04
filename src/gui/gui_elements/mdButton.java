@@ -188,7 +188,6 @@ public class mdButton extends Rectangle {
 
     public void clicked() {
         timesClicked++;
-        System.out.println("in click: " + Preferences.preferences[0] + " " + Preferences.preferences[1]);
         if (Preferences.preferences[0] && isButton) {
             clickSound.play();
         }
@@ -215,7 +214,7 @@ public class mdButton extends Rectangle {
         return buttonText;
     }
 
-    public ImageView addImage(String filepath) {
+    public ImageView addImage(String filepath, double scaleX, double scaleY) {
         ImageView buttonImage;
         try {
             Image imageSource = new Image(new FileInputStream(filepath));
@@ -227,6 +226,9 @@ public class mdButton extends Rectangle {
         buttonImage.setX(this.getX() + (this.getWidth() - buttonImage.getBoundsInLocal().getWidth()) / 2);
         buttonImage.setY(this.getY() + (this.getHeight() - buttonImage.getBoundsInLocal().getHeight()) / 2);
         // buttonText.getBoundsInLocal().getHeight() / 9
+
+        buttonImage.setScaleX(scaleX);
+        buttonImage.setScaleY(scaleY);
 
         this.startingImageWidth = buttonImage.getBoundsInLocal().getWidth();
         this.startingImageHeight = buttonImage.getBoundsInLocal().getHeight();

@@ -76,4 +76,13 @@ public class TrickyChoice extends DecisionAlgorithm {
         // otherwise, play the move that beats the move that beats this agent's last move
         return Evaluation.getWinningMove(Evaluation.getWinningMove(thisAgent.getChoice(thisAgent.numOfChoices() - 1)));
     }
+
+    /**
+     * Returns the string to the Tricky Choice Icon
+     *
+     * @return the path to the icon image
+     */
+    public static String getIcon() {
+        return "src/gui/gui_elements/Assets/blue_triangle.png";
+    }
 }

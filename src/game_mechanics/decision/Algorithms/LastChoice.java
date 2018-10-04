@@ -40,4 +40,13 @@ public class LastChoice extends DecisionAlgorithm {
         if (previousDecision[0] == Choices.NOCHOICE) return Choices.getRandomChoice();
         return previousDecision[0];
     }
+
+    /**
+     * Returns the string to the Last Choice Icon
+     *
+     * @return the path to the icon image
+     */
+    public static String getIcon() {
+        return "src/gui/gui_elements/Assets/green_square.png";
+    }
 }

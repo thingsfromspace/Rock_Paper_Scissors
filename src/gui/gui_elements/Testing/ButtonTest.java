@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ButtonTest extends Application {
@@ -50,7 +51,8 @@ public class ButtonTest extends Application {
         exampleButton2.setDropShadow();
 
         buttonText.add(exampleButton.addText("Hello tanner", new Font("Warnock Pro", 100), Color.BLACK));
-        buttonImages.add(exampleButton2.addImage("/Users/tannerleonardmac/Documents/code_google_drive/AP_Computer_Science/Rock Paper Scissors/src/gui/gui_elements/Testing/pigImage.png"));
+        buttonImages.add(exampleButton2.addImage(new File("src/gui/gui_elements/Testing/pigImage.png").getAbsolutePath(),
+                .25, .25));
 
         root.getChildren().addAll(exampleButton, buttonText.get(0), exampleButton2, buttonImages.get(0));
         Scene scene = new Scene(root, 1280, 720, Color.WHITE);

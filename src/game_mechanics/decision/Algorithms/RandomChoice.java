@@ -29,4 +29,13 @@ public class RandomChoice extends DecisionAlgorithm {
     public Choices run() {
         return Choices.getRandomChoice();
     }
+
+    /**
+     * Returns the string to the Random Choice Icon
+     *
+     * @return the path to the icon image
+     */
+    public static String getIcon() {
+        return "src/gui/gui_elements/Assets/red_circle.png";
+    }
 }

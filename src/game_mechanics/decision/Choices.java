@@ -8,12 +8,17 @@ import java.util.Random;
  */
 public enum Choices {
     // the possible RCS choices
-    ROCK(1, "ROCK"), PAPER(3, "PAPER"), SCISSORS(2, "SCISSORS"), @SuppressWarnings("SpellCheckingInspection") NOCHOICE(0, "NO CHOICE");
+    ROCK(1, "ROCK", "src/gui/gui_elements/Assets/cartoon_rock.png"),
+    PAPER(3, "PAPER", "src/gui/gui_elements/Assets/cartoon_paper_final.png"),
+    SCISSORS(2, "SCISSORS", "src/gui/gui_elements/Assets/cartoon_scissors_final.png"),
+    @SuppressWarnings("SpellCheckingInspection") NOCHOICE(0, "NO CHOICE", "none");
 
     // a number associated with the choices to make evaluation easier
     private final int typeNum;
     // a string representing the choices
     private final String name;
+    // a string that links to the image
+    private final String iconLocation;
 
     /**
      * Creates a new RCP choice
@@ -21,9 +26,19 @@ public enum Choices {
      * @param typeNum the number associated with the choice
      * @param name    the name of the choice
      */
-    Choices(int typeNum, String name) {
+    Choices(int typeNum, String name, String icon) {
         this.typeNum = typeNum;
         this.name = name;
+        this.iconLocation = icon;
+    }
+
+    /**
+     * Returns the icon string
+     *
+     * @return the icon pathname
+     */
+    public String getImageString() {
+        return iconLocation;
     }
 
     /**
