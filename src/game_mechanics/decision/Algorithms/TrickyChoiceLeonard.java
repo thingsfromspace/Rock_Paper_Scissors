@@ -5,7 +5,7 @@ import game_mechanics.Evaluation.EvaluationLeonard;
 import game_mechanics.decision.ChoicesLeonard;
 import game_mechanics.decision.DecisionAlgorithmLeonard;
 import game_mechanics.decision.InputLeonard;
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 
 /**
  * <h1>Follows a more complex decision procedure
@@ -25,7 +25,7 @@ import gui.FilePaths;
  * @since 2018-09-29
  */
 public class TrickyChoiceLeonard extends DecisionAlgorithmLeonard {
-    private static FilePaths paths = new FilePaths();
+    private static FilePathsLeonard paths = new FilePathsLeonard();
     private AgentLeonard thisAgent;
     private ChoicesLeonard opponentLastMove;
 

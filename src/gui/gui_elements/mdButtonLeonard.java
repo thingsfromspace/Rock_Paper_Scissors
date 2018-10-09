@@ -1,6 +1,6 @@
 package gui.gui_elements;
 
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 import gui.gui_elements.options_screen.PreferencesLeonard;
 import javafx.geometry.Bounds;
 import javafx.geometry.VPos;
@@ -74,7 +74,7 @@ public class mdButtonLeonard extends Rectangle {
     // drop shadow
     private DropShadow dropShadow = new DropShadow();
     // file paths
-    private String[] filePaths = new FilePaths().paths;
+    private String[] filePaths = new FilePathsLeonard().paths;
     // AUDIO SETTINGS
     // hover audio
     private String hoverStringPath = new File(filePaths[0]).getAbsolutePath();

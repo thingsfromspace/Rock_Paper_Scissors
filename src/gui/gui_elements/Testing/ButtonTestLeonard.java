@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 2018-09-29
  */
-public class ButtonTest extends Application {
+public class ButtonTestLeonard extends Application {
 
     // parameters used for testing
     private final double buttonWidth = 600;

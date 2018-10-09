@@ -4,7 +4,7 @@ import game_mechanics.AgentLeonard;
 import game_mechanics.decision.ChoicesLeonard;
 import game_mechanics.decision.DecisionAlgorithmLeonard;
 import game_mechanics.decision.InputLeonard;
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 
 /**
  * <h1>Chooses the opponent's last choice</h1>
@@ -18,7 +18,7 @@ import gui.FilePaths;
  * @since 2018-09-29
  */
 public class LastChoiceLeonard extends DecisionAlgorithmLeonard {
-    private static FilePaths paths = new FilePaths();
+    private static FilePathsLeonard paths = new FilePathsLeonard();
 
     /**
      * Constructs the LastChoiceLeonard decision algorithm

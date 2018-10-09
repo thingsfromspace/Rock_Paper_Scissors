@@ -9,13 +9,13 @@ import java.io.File;
  * @version 1.0
  * @since 2018-09-29
  */
-public class FilePaths {
+public class FilePathsLeonard {
     // a string to hold the file paths
     public String[] paths;
     // get an example file path
     private String filePath = new File("").getAbsolutePath();
 
-    public FilePaths() {
+    public FilePathsLeonard() {
         // the length of the example file path
         int filePathLen = filePath.length();
         // controls whether the file path needs to include "src/"

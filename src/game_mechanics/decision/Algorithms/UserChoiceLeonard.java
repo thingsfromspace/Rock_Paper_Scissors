@@ -2,7 +2,7 @@ package game_mechanics.decision.Algorithms;
 
 import game_mechanics.decision.ChoicesLeonard;
 import game_mechanics.decision.DecisionAlgorithmLeonard;
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 import gui.gui_elements.main_screen.play_arena.MainArenaLeonard;
 
 import java.util.Scanner;
@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public class UserChoiceLeonard extends DecisionAlgorithmLeonard {
     // file paths
-    private static FilePaths paths = new FilePaths();
+    private static FilePathsLeonard paths = new FilePathsLeonard();
     // controls whether the input will be through the command line (used for testing)
     private final boolean commandLine;
 

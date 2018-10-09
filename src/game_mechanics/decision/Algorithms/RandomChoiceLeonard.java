@@ -2,7 +2,7 @@ package game_mechanics.decision.Algorithms;
 
 import game_mechanics.decision.ChoicesLeonard;
 import game_mechanics.decision.DecisionAlgorithmLeonard;
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 
 /**
  * <h1>Chooses randomly</h1>
@@ -14,7 +14,7 @@ import gui.FilePaths;
  * @since 2018-09-29
  */
 public class RandomChoiceLeonard extends DecisionAlgorithmLeonard {
-    private static FilePaths paths = new FilePaths();
+    private static FilePathsLeonard paths = new FilePathsLeonard();
 
     /**
      * Create the RandomChoiceLeonard decision algorithm

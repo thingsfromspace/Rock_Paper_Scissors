@@ -4,7 +4,7 @@ import gui.gui_elements.main_screen.MainScreenLeonard;
 import gui.gui_elements.mdButtonLeonard;
 import gui.gui_elements.options_screen.OptionsLeonard;
 import gui.gui_elements.options_screen.PreferencesLeonard;
-import gui.gui_elements.start_screen.Start;
+import gui.gui_elements.start_screen.StartLeonard;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -61,7 +61,7 @@ public class RCPAppLeonard extends Application {
         Group displayGroup = new Group();
 
         // create a starting screen
-        Start startingScreen = new Start(WIDTH, HEIGHT,
+        StartLeonard startingScreen = new StartLeonard(WIDTH, HEIGHT,
                 Font.font("Europa"), "play", "options");
 
         // create an options screen
@@ -238,7 +238,7 @@ public class RCPAppLeonard extends Application {
      * @param startScreen the start screen you want to switch to
      * @param displayGroup the display group that holds all on-screen elements
      */
-    private void changeToStart(Start startScreen, Group displayGroup) {
+    private void changeToStart(StartLeonard startScreen, Group displayGroup) {
         buttons.clear();
         buttonImages.clear();
         displayGroup.getChildren().clear();

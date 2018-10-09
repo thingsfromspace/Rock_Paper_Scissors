@@ -1,6 +1,6 @@
 package gui.gui_elements.start_screen;
 
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 import gui.gui_elements.mdButtonLeonard;
 import gui.gui_elements.options_screen.PreferencesLeonard;
 import javafx.scene.Node;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * @since 2018-09-29
  */
 @SuppressWarnings("ALL")
-public class Start {
+public class StartLeonard {
     // the screen width
     private double screenWidth;
     // the screen height
@@ -34,15 +34,15 @@ public class Start {
     private int buttons = 0;
 
     // filepaths
-    private FilePaths paths = new FilePaths();
+    private FilePathsLeonard paths = new FilePathsLeonard();
 
     /**
-     * Constructs the Start Screen
+     * Constructs the StartLeonard Screen
      *
      * @param buttonFont the font of the text for the buttons
      * @param buttonText The text for each button on the start screen
      */
-    public Start(double screenWidth, double screenHeight, Font buttonFont, String... buttonText) {
+    public StartLeonard(double screenWidth, double screenHeight, Font buttonFont, String... buttonText) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.buttonFont = buttonFont;

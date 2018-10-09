@@ -7,7 +7,7 @@ import game_mechanics.decision.Algorithms.RandomChoiceLeonard;
 import game_mechanics.decision.Algorithms.TrickyChoiceLeonard;
 import game_mechanics.decision.Algorithms.UserChoiceLeonard;
 import game_mechanics.decision.ChoicesLeonard;
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 import gui.gui_elements.main_screen.gamelog.GameHistoryGUILeonard;
 import gui.gui_elements.main_screen.select_agent.AgentCatalogLeonard;
 import gui.gui_elements.mdButtonLeonard;
@@ -42,7 +42,7 @@ public class MainArenaLeonard {
     private double playerImageScale = 0.185;
     private double choiceImageScale = 0.5;
     // the file paths used for the icons
-    private FilePaths paths = new FilePaths();
+    private FilePathsLeonard paths = new FilePathsLeonard();
     // stores the user's and opponent's most recent decisions
     private ChoicesLeonard userDecision;
     private ChoicesLeonard opposingDecision;

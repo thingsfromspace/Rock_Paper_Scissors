@@ -1,6 +1,6 @@
 package game_mechanics.decision;
 
-import gui.FilePaths;
+import gui.FilePathsLeonard;
 
 import java.util.Random;
 
@@ -29,7 +29,7 @@ public enum ChoicesLeonard {
      * @param name    the name of the choice
      */
     ChoicesLeonard(int typeNum, String name, int icon) {
-        FilePaths paths = new FilePaths();
+        FilePathsLeonard paths = new FilePathsLeonard();
 
         this.typeNum = typeNum;
         this.name = name;
