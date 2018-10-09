@@ -1,6 +1,6 @@
 package game_mechanics.decision;
 
-import game_mechanics.Agent;
+import game_mechanics.AgentLeonard;
 
 import java.util.ArrayList;
 
@@ -12,32 +12,32 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 2018-09-29
  */
-public class Input {
+public class InputLeonard {
     // the agent that the input takes
-    private final Agent inputLocation;
+    private final AgentLeonard inputLocation;
     @SuppressWarnings("Convert2Diamond")
     private final ArrayList<Integer> inputItemsIndex = new ArrayList<Integer>(0);
     private boolean reverse;
 
     /**
-     * Create an Input object using an agent and one input
+     * Create an InputLeonard object using an agent and one input
      *
-     * @param inputLocation the Agent that the input collects information from
+     * @param inputLocation the AgentLeonard that the input collects information from
      * @param inputItem     the index of the one input point
      */
     @SuppressWarnings("unused")
-    public Input(Agent inputLocation, int inputItem) {
+    public InputLeonard(AgentLeonard inputLocation, int inputItem) {
         this.inputLocation = inputLocation;
         this.inputItemsIndex.add(inputItem);
     }
 
     /**
-     * Create an Input object using an agent and many inputs
-     * @param inputLocation the Agent that the input collects information from
+     * Create an InputLeonard object using an agent and many inputs
+     * @param inputLocation the AgentLeonard that the input collects information from
      * @param inputStart starting input index
      * @param inputEnd ending input index
      */
-    public Input(Agent inputLocation, int inputStart, int inputEnd) {
+    public InputLeonard(AgentLeonard inputLocation, int inputStart, int inputEnd) {
         this.inputLocation = inputLocation;
         for (int i = inputStart; i <= inputEnd; i++) {
             this.inputItemsIndex.add(i);
@@ -45,31 +45,31 @@ public class Input {
     }
 
     /**
-     * Create an Input object using an agent and one input.
+     * Create an InputLeonard object using an agent and one input.
      * This constructor allows you to count in reverse,
      * starting from the agents most recent move.
-     * @param inputLocation the Agent that the input collects information from
+     * @param inputLocation the AgentLeonard that the input collects information from
      * @param inputItem the index of the one input point
      * @param reverse specifies whether the indexes should be reversed
      */
-    public Input(Agent inputLocation, int inputItem, boolean reverse) {
+    public InputLeonard(AgentLeonard inputLocation, int inputItem, boolean reverse) {
         this.inputLocation = inputLocation;
         this.inputItemsIndex.add(inputItem);
         this.reverse = reverse;
     }
 
     /**
-     * Create an Input object using an agent and many inputs
+     * Create an InputLeonard object using an agent and many inputs
      * This constructor allows you to count in reverse,
      * starting from the agents most recent move.
      *
-     * @param inputLocation the Agent that the input collects information from
+     * @param inputLocation the AgentLeonard that the input collects information from
      * @param inputStart    starting input index
      * @param inputEnd      ending input index
      * @param reverse       specifies whether the indexes should be reversed
      */
     @SuppressWarnings("unused")
-    public Input(Agent inputLocation, int inputStart, int inputEnd, boolean reverse) {
+    public InputLeonard(AgentLeonard inputLocation, int inputStart, int inputEnd, boolean reverse) {
         this.inputLocation = inputLocation;
         for (int i = inputStart; i <= inputEnd; i++) {
             this.inputItemsIndex.add(i);
@@ -82,9 +82,9 @@ public class Input {
      *
      * @return the various inputs
      */
-    public Choices[] getInputs() {
+    public ChoicesLeonard[] getInputs() {
         // create an array to hold the inputs
-        Choices[] inputs = new Choices[inputItemsIndex.size()];
+        ChoicesLeonard[] inputs = new ChoicesLeonard[inputItemsIndex.size()];
 
         // obtain all of the inputs
         for (int i = 0; i < inputs.length; i++) {
@@ -105,15 +105,15 @@ public class Input {
      *
      * @return the inputs from the agent
      */
-    public Choices[] getInputsNoEnd() {
+    public ChoicesLeonard[] getInputsNoEnd() {
 
         // create an array to store the inputs
-        Choices inputs[];
+        ChoicesLeonard inputs[];
 
         // obtain the inputs
         if (reverse) {
             // create an appropriately sized array
-            inputs = new Choices[inputLocation.numOfChoices() - (inputItemsIndex.get(inputItemsIndex.size() - 1) - 1)];
+            inputs = new ChoicesLeonard[inputLocation.numOfChoices() - (inputItemsIndex.get(inputItemsIndex.size() - 1) - 1)];
             // collect all of the inputs
             for (int i = 0; i >= inputs.length; i++) {
                 //noinspection ConstantConditions
@@ -121,7 +121,7 @@ public class Input {
             }
         } else {
             // create an appropriately sized array
-            inputs = new Choices[inputLocation.numOfChoices() - inputItemsIndex.get(0) + 1];
+            inputs = new ChoicesLeonard[inputLocation.numOfChoices() - inputItemsIndex.get(0) + 1];
             // collect all of the inputs
             for (int i = inputItemsIndex.get(0); i <= inputLocation.numOfChoices(); i++) {
                 inputs[i - inputItemsIndex.get(0)] = inputLocation.getChoice(i - 1);

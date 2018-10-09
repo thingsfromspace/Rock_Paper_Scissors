@@ -1,11 +1,13 @@
-package gui.start_screen;
+package gui.gui_elements.start_screen;
 
-import gui.gui_elements.mdButton;
-import gui.gui_elements.options_screen.Preferences;
+import gui.FilePaths;
+import gui.gui_elements.mdButtonLeonard;
+import gui.gui_elements.options_screen.PreferencesLeonard;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -20,11 +22,19 @@ import java.util.ArrayList;
  */
 @SuppressWarnings("ALL")
 public class Start {
+    // the screen width
     private double screenWidth;
+    // the screen height
     private double screenHeight;
+    // the font used
     private Font buttonFont;
+    // the texts of each button
     private String[] buttonText;
+    // the number of buttons
     private int buttons = 0;
+
+    // filepaths
+    private FilePaths paths = new FilePaths();
 
     /**
      * Constructs the Start Screen
@@ -40,35 +50,45 @@ public class Start {
         this.buttons = buttonText.length;
     }
 
-    @SuppressWarnings({"SameReturnValue", "unused"})
-    public ArrayList<Node> getStartScreen(Node parent, Color button1Color, Color button2Color) {
+    /**
+     * This creates a new start screen
+     *
+     * @return a collection of nodes comprising the start screen
+     */
+    public ArrayList<Node> getStartScreen() {
+        // a collection to hold all start screen elements
         ArrayList<Node> elements = new ArrayList<>(0);
 
-        // create a "button" for the title
-        mdButton titleButton = new mdButton("title", parent, 1000, 250, (screenWidth - 1000) / 2,
+        // the scale for the title image
+        double titleScale = 0.28;
+
+        // CREATE A TITLE BUTTON
+        mdButtonLeonard titleButton = new mdButtonLeonard("title", 1000, 250, (screenWidth - 1000) / 2,
                 50);
         titleButton.setAnimation(false);
         titleButton.setButtonColor(Color.LIGHTPINK);
         titleButton.isButton = false;
         elements.add(titleButton);
-        elements.add(titleButton.addText("[Title Image]",
-                new Font(buttonFont.getFamily(), 150), Color.BLACK));
+        elements.add(titleButton.addImage(new File(paths.paths[2]).getAbsolutePath(),
+                titleScale, titleScale));
 
-        // create a play button and an options button
-        mdButton playButton = new mdButton("play", parent, 800, 75, (screenWidth - 800) / 2, 405);
+        // CREATE A PLAY BUTTON
+        mdButtonLeonard playButton = new mdButtonLeonard("play", 800, 75, (screenWidth - 800) / 2, 405);
         playButton.setDropShadow();
         playButton.setAnimation(true);
         elements.add(playButton);
         elements.add(playButton.addText(buttonText[0], new Font(buttonFont.getFamily(), 50), Color.BLACK));
 
-        mdButton optionButton = new mdButton("option", parent, 800, 75, (screenWidth - 800) / 2, 530);
+        // CREATE AN OPTIONS BUTTON
+        mdButtonLeonard optionButton = new mdButtonLeonard("option", 800, 75, (screenWidth - 800) / 2, 530);
         optionButton.setDropShadow();
         optionButton.setAnimation(true);
-        optionButton.setClickSoundON(Preferences.preferences[0]);
-        optionButton.setHoverSoundON(Preferences.preferences[1]);
+        optionButton.setClickSoundON(PreferencesLeonard.preferences[0]);
+        optionButton.setHoverSoundON(PreferencesLeonard.preferences[1]);
         elements.add(optionButton);
         elements.add(optionButton.addText(buttonText[1], new Font(buttonFont.getFamily(), 50), Color.BLACK));
 
+        // return all of the elements
         return elements;
     }
 }

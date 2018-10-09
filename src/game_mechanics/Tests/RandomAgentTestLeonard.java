@@ -1,36 +1,43 @@
 package game_mechanics.Tests;
 
-import game_mechanics.Agent;
-import game_mechanics.decision.Algorithms.RandomChoice;
-import game_mechanics.decision.Choices;
+import game_mechanics.AgentLeonard;
+import game_mechanics.decision.Algorithms.RandomChoiceLeonard;
+import game_mechanics.decision.ChoicesLeonard;
 
 /**
- * <h1>Tests the Random Choice Agent</h1>
+ * <h1>Tests the Random Choice AgentLeonard</h1>
  *
  * @author Tanner Leonard
  * @version 1.0
  * @since 2018-09-29
  */
-class RandomAgentTest {
+class RandomAgentTestLeonard {
     /**
-     * Performs the tests on the Random Choice Agent
+     * Performs the tests on the Random Choice AgentLeonard
      * and prints out the results.
      * @param args command line arguments
      */
     public static void main(String args[]) {
-        Agent randomAgent = new Agent(new RandomChoice());
+        // create a random agent
+        AgentLeonard randomAgent = new AgentLeonard(new RandomChoiceLeonard());
+
+        // used to count the number each move was chosen
         int scissors = 0;
         int paper = 0;
         int rock = 0;
+
+        // make one million choices
         for(int i = 0; i < 1_000_000; i++) {
-            Choices choice = randomAgent.makeDecision();
-            if(choice == Choices.ROCK) rock++;
-            else if(choice == Choices.PAPER) paper++;
+            ChoicesLeonard choice = randomAgent.makeDecision();
+            if (choice == ChoicesLeonard.ROCK) rock++;
+            else if (choice == ChoicesLeonard.PAPER) paper++;
             else scissors++;
         }
+
+        // check that the agent chooses roughly equal numbers of rock, paper, and scissors
         if((326_000 < paper && paper < 340_000) && (326_000 < scissors && scissors < 340_000) &&
            (326_000 < rock && rock < 340_000)) {
-            System.out.println("All Tests Passed for Random Agent.\n\tTimes ROCK was chosen: " + rock + "\n\t" +
+            System.out.println("All Tests Passed for Random AgentLeonard.\n\tTimes ROCK was chosen: " + rock + "\n\t" +
                     "Times PAPER was chosen: " + paper + "\n\tTimes SCISSORS was chosen: " +
                     scissors);
         }

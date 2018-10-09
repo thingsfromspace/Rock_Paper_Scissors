@@ -1,7 +1,7 @@
 package game_mechanics;
 
-import game_mechanics.decision.Choices;
-import game_mechanics.decision.DecisionAlgorithm;
+import game_mechanics.decision.ChoicesLeonard;
+import game_mechanics.decision.DecisionAlgorithmLeonard;
 
 import java.util.ArrayList;
 
@@ -15,13 +15,12 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 2018-09-29
  */
-public class Agent {
+public class AgentLeonard {
+    // holds the agent's decision algorithm
+    private final DecisionAlgorithmLeonard decisionAlgorithm;
     // holds all of the agents choices
     @SuppressWarnings("Convert2Diamond")
-    private final ArrayList<Choices> priorDecisions = new ArrayList<Choices>(0);
-
-    // holds the agent's decision algorithm
-    private final DecisionAlgorithm decisionAlgorithm;
+    public ArrayList<ChoicesLeonard> priorDecisions = new ArrayList<ChoicesLeonard>(0);
 
     /**
      * Constructs an agent with a specific
@@ -29,7 +28,7 @@ public class Agent {
      *
      * @param algorithm the new agent's decision algorithm
      */
-    public Agent(DecisionAlgorithm algorithm) {
+    public AgentLeonard(DecisionAlgorithmLeonard algorithm) {
         this.decisionAlgorithm = algorithm;
     }
 
@@ -37,20 +36,20 @@ public class Agent {
      * This method returns the specified choice
      * from the agent's log of its previous
      * choices. If the agent has not made the choice
-     * yet, this method will return {@link game_mechanics.decision.Choices#NOCHOICE}
+     * yet, this method will return {@link ChoicesLeonard#NOCHOICE}
      *
      * @param choiceIndex the index of the choice you
      *                    want to access, starting
      *                    from zero
      * @return the agent's specified choice
      */
-    public Choices getChoice(int choiceIndex) {
+    public ChoicesLeonard getChoice(int choiceIndex) {
         try {
             // return the specified choice
             return priorDecisions.get(choiceIndex);
         } catch (IndexOutOfBoundsException choiceNotMade) {
             // return no choice
-            return Choices.NOCHOICE;
+            return ChoicesLeonard.NOCHOICE;
         }
     }
 
@@ -67,9 +66,9 @@ public class Agent {
      * and returns that decision
      * @return the decision the agent has made
      */
-    public Choices makeDecision() {
+    public ChoicesLeonard makeDecision() {
         // run the agent's decision algorithm
-        Choices decision = decisionAlgorithm.run();
+        ChoicesLeonard decision = decisionAlgorithm.run();
 
         // update the agent's log of her decisions
         priorDecisions.add(decision);
@@ -84,7 +83,8 @@ public class Agent {
      * @param choice the decision the agent must make
      */
     @SuppressWarnings("UnusedReturnValue")
-    public void forceDecision(Choices choice) {
+    public void forceDecision(ChoicesLeonard choice) {
+        // add the choice to the agent's prior decisions
         priorDecisions.add(choice);
     }
 
@@ -95,8 +95,19 @@ public class Agent {
      * @param anotherAlgorithm the other decision algorithm
      */
     @SuppressWarnings("UnusedReturnValue")
-    public void forceDecision(DecisionAlgorithm anotherAlgorithm) {
-        Choices decision = anotherAlgorithm.run();
+    public void forceDecision(DecisionAlgorithmLeonard anotherAlgorithm) {
+        // obtain a choice from another decision algorithm
+        ChoicesLeonard decision = anotherAlgorithm.run();
         priorDecisions.add(decision);
+    }
+
+    /**
+     * Obtains the agent's decision algorithm
+     *
+     * @return the agent's decision algorithm
+     */
+    public DecisionAlgorithmLeonard getDecisionAlgorithm() {
+        // return the decision algorithm
+        return this.decisionAlgorithm;
     }
 }

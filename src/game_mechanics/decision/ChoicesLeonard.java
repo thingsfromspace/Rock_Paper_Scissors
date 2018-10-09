@@ -1,17 +1,19 @@
 package game_mechanics.decision;
 
+import gui.FilePaths;
+
 import java.util.Random;
 
 /**
  * An enumeration used for representing the possible
  * moves in Rock-Paper-Scissors
  */
-public enum Choices {
+public enum ChoicesLeonard {
     // the possible RCS choices
-    ROCK(1, "ROCK", "src/gui/gui_elements/Assets/cartoon_rock.png"),
-    PAPER(3, "PAPER", "src/gui/gui_elements/Assets/cartoon_paper_final.png"),
-    SCISSORS(2, "SCISSORS", "src/gui/gui_elements/Assets/cartoon_scissors_final.png"),
-    @SuppressWarnings("SpellCheckingInspection") NOCHOICE(0, "NO CHOICE", "none");
+    ROCK(1, "ROCK", 4),
+    PAPER(3, "PAPER", 5),
+    SCISSORS(2, "SCISSORS", 6),
+    @SuppressWarnings("SpellCheckingInspection") NOCHOICE(0, "NO CHOICE");
 
     // a number associated with the choices to make evaluation easier
     private final int typeNum;
@@ -26,10 +28,24 @@ public enum Choices {
      * @param typeNum the number associated with the choice
      * @param name    the name of the choice
      */
-    Choices(int typeNum, String name, String icon) {
+    ChoicesLeonard(int typeNum, String name, int icon) {
+        FilePaths paths = new FilePaths();
+
         this.typeNum = typeNum;
         this.name = name;
-        this.iconLocation = icon;
+        this.iconLocation = paths.paths[icon];
+    }
+
+    /**
+     * Creates a new RCP choice
+     *
+     * @param typeNum the number associated with the choice
+     * @param name    the name of the choice
+     */
+    ChoicesLeonard(int typeNum, String name) {
+        this.typeNum = typeNum;
+        this.name = name;
+        this.iconLocation = "none";
     }
 
     /**
@@ -46,8 +62,8 @@ public enum Choices {
      *
      * @return a random RCP move
      */
-    public static Choices getRandomChoice() {
-        Choices choices[] = {Choices.ROCK, Choices.PAPER, Choices.SCISSORS};
+    public static ChoicesLeonard getRandomChoice() {
+        ChoicesLeonard choices[] = {ChoicesLeonard.ROCK, ChoicesLeonard.PAPER, ChoicesLeonard.SCISSORS};
         return choices[new Random().nextInt(3)];
     }
 
@@ -57,14 +73,14 @@ public enum Choices {
      * @param number the number associated with a choice
      * @return the choice associated with the number
      */
-    public static Choices getChoiceFromNumber(int number) {
+    public static ChoicesLeonard getChoiceFromNumber(int number) {
         // if the number is outside of the bounds, return NOCHOICE
-        if (number <= 0 || number > 3) return Choices.NOCHOICE;
+        if (number <= 0 || number > 3) return ChoicesLeonard.NOCHOICE;
 
         // return the corresponding choice
-        if (number == 1) return Choices.ROCK;
-        else if (number == 2) return Choices.SCISSORS;
-        else return Choices.PAPER;
+        if (number == 1) return ChoicesLeonard.ROCK;
+        else if (number == 2) return ChoicesLeonard.SCISSORS;
+        else return ChoicesLeonard.PAPER;
     }
 
     /**
